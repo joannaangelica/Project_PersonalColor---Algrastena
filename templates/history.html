@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GlowFinder - History</title>
+
+<style>
+    body{
+        background:#f8dce5;
+        font-family:"Chewy";
+        text-align:center;
+        color:#6f3d00;
+    }
+    h1{
+        margin-top:30px;
+        color:#ff8e8e;
+        font-size:48px;
+        letter-spacing:2px;
+    }
+    .list{
+        margin-top:30px;
+        width:90%;
+        max-width:700px;
+        margin-left:auto;
+        margin-right:auto;
+        background:white;
+        padding:20px;
+        border-radius:20px;
+        box-shadow:0 5px 12px rgba(0,0,0,0.1);
+        text-align:left;
+    }
+    .item{
+        padding:15px;
+        background:#ffecec;
+        border-radius:16px;
+        margin-bottom:12px;
+    }
+    .btn{
+        margin-top:22px;
+        padding:14px 40px;
+        background:#ffb6d9;
+        border-radius:30px;
+        font-size:22px;
+        border:none;
+        cursor:pointer;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>YOUR HISTORY</h1>
+
+<div class="list" id="historyList">
+    Loading...
+</div>
+
+<button class="btn" onclick="window.location.href='/choose'">BACK</button>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    let history = localStorage.getItem("analysisHistory");
+
+    const list = document.getElementById("historyList");
+
+    if (!history) {
+        list.innerHTML = "<p>No history found.</p>";
+        return;
+    }
+
+    history = JSON.parse(history);
+
+    list.innerHTML = "";
+
+    history.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `
+            <strong>#${index + 1}</strong><br>
+            Undertone: ${item.undertone}<br>
+            Season: ${item.season}<br>
+            ${item.recommendation}<br>
+            <small>${item.time}</small>
+        `;
+        list.appendChild(div);
+    });
+});
+</script>
+
+</body>
+</html>
